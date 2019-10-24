@@ -1,15 +1,25 @@
 let pwd = require('./pwd');
-let fs = require('./ls');
+let fsLs = require('./ls');
+let fsCat = require('./cat');
+let curl = require('./curl');
 
 process.stdout.write('prompt > ');
 
 process.stdin.on('data', data => {
-  const cmd = data.toString().trim();
+  const dataArr = data
+    .toString()
+    .trim()
+    .split(' ');
+  const cmd = dataArr[0];
 
   if (cmd === 'pwd') {
     pwd();
   } else if (cmd === 'ls') {
-    fs();
+    fsLs();
+  } else if (cmd === 'cat') {
+    fsCat(dataArr[1]);
+  } else if (cmd === 'curl') {
+    curl(dataArr[1]);
   } else {
     process.stdout.write('You typed: ' + cmd);
   }
